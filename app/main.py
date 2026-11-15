@@ -1,16 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import vehiculos, comandos, estado_historial, demos, ws
+from app.routers import vehiculos, comandos, estado_historial, demos, ws, auth, admin, portal
 
 app = FastAPI(
-    title="API Vehículo Robótico IoT",
-    description="API RESTful y WebSocket con POO integrada con los 21 Stored Procedures en Amazon RDS",
-    version="1.0.0",
+    title="API Vehículo Robótico IoT - Ecosistema Empresarial",
+    description="API RESTful y WebSocket con POO, RBAC, Control, Monitoreo y Administración integrada con Amazon RDS MySQL",
+    version="2.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
 
-# Habilitar CORS para pruebas locales
+# Habilitar CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,7 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Registrar Routers
+# Routers de la Plataforma
+app.include_router(auth.router)
+app.include_router(admin.router)
+app.include_router(portal.router)
 app.include_router(vehiculos.router)
 app.include_router(comandos.router)
 app.include_router(estado_historial.router)
@@ -29,8 +32,8 @@ app.include_router(ws.router)
 @app.get("/", tags=["General"])
 def root():
     return {
-        "sistema": "API Vehículo IoT - Entorno Dev",
+        "sistema": "API Vehículo IoT - Ecosistema Empresarial V2",
         "estado": "En línea",
-        "docs": "http://localhost:8000/docs",
-        "ws": "ws://localhost:8000/ws/vehiculos/{id_vehiculo}"
+        "docs": "https://vehiculo-iot-excavadora.duckdns.org/docs",
+        "modulos": ["Control", "Monitoreo", "Administración", "RBAC", "WebSocket"]
     }
