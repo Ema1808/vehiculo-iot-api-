@@ -1,4 +1,9 @@
+import os
+from pathlib import Path
 from pydantic_settings import BaseSettings
+
+_BASE_DIR = Path(__file__).resolve().parent.parent.parent
+_ENV_FILE = _BASE_DIR / ".env"
 
 class Settings(BaseSettings):
     DB_HOST: str
@@ -14,7 +19,7 @@ class Settings(BaseSettings):
     PASSWORD_SALT: str = "iot_salt_2026_"
 
     class Config:
-        env_file = ".env"
+        env_file = str(_ENV_FILE) if _ENV_FILE.exists() else ".env"
         extra = "ignore"
 
 settings = Settings()

@@ -52,17 +52,19 @@ class VehiculoUpdate(VehiculoCreate):
 
 class UnidadFisicaResponse(BaseModel):
     id_vehiculo: int
-    id_modelo: Optional[int]
-    numero_serie: Optional[str]
-    estado_comercial: str
+    id_modelo: Optional[int] = None
+    numero_serie: Optional[str] = None
+    estado_comercial: str = "DISPONIBLE"
     nombre: str
-    modelo: Optional[str]
-    descripcion: Optional[str]
-    microcontrolador: Optional[str]
-    fecha_registro: Optional[datetime]
-    activo: bool
+    modelo: Optional[str] = None
+    descripcion: Optional[str] = None
+    microcontrolador: Optional[str] = None
+    fecha_registro: Optional[datetime] = None
+    activo: bool = True
     modelo_nombre: Optional[str] = None
     propietario_nombre: Optional[str] = None
+    id_propietario: Optional[int] = None
+    autoriza_soporte: Optional[bool] = None
 
 # --- ASIGNACIONES DE VEHÍCULOS ---
 class AsignacionCreate(BaseModel):
@@ -81,10 +83,10 @@ class AsignacionResponse(BaseModel):
     cliente_nombre: str
     cliente_email: str
     vehiculo_nombre: str
-    numero_serie: Optional[str]
+    numero_serie: Optional[str] = None
     fecha_asignacion: datetime
-    estado: str
-    autoriza_soporte: bool
+    estado: str = "ACTIVA"
+    autoriza_soporte: bool = False
 
 # --- COMANDOS ---
 class ComandoCreate(BaseModel):
@@ -108,7 +110,7 @@ class EstadoUpdate(BaseModel):
 class HistorialRegistro(BaseModel):
     id_historial: int
     id_vehiculo: int
-    id_comando: Optional[int]
+    id_comando: Optional[int] = None
     fecha_hora: datetime
     origen: str
 
@@ -145,13 +147,13 @@ class ReservaInvitadoResponse(BaseModel):
 # --- BITÁCORA Y DASHBOARD ADMIN ---
 class BitacoraResponse(BaseModel):
     id_bitacora: int
-    id_usuario: Optional[int]
-    usuario_nombre: Optional[str]
+    id_usuario: Optional[int] = None
+    usuario_nombre: Optional[str] = None
     accion: str
     entidad_afectada: str
-    id_entidad: Optional[int]
-    detalle_json: Optional[str]
-    ip_origen: Optional[str]
+    id_entidad: Optional[int] = None
+    detalle_json: Optional[str] = None
+    ip_origen: Optional[str] = None
     fecha_hora: datetime
 
 class DashboardMetricsResponse(BaseModel):
